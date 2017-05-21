@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block page_content %}
+  <div class="manage_div">
+    <table class="manage_table">
+      <tr>
+        <th>Avatar</th>
+        <th>id</th>
+        <th>name</th>
+        <th>blog_type</th>
+        <th>blog_address</th>
+        <th>flag</th>
+        <th></th>
+        <th></th>
+      </tr>
+      {% for author in authors %}
+        <tr>
+          <td><img src="{{ url_for('main.avatar',author_id=author.id) }}" class="img-circle" width="25px"
+                   alt="{{ author.name }}"></td>
+          <td>{{ author.id }}</td>
+          <td>{{ author.name }}</td>
+          <td>{{ author.blog_type }}</td>
+          <td>{{ author.blog_address }}</td>
+          <td>{{ author.flag }}</td>
+          <td><a href="{{ url_for('main.modify_author',author_id=author.id) }}" class="label label-primary">Modify</a>
+          </td>
+          <td><a href="{{ url_for('main.delete_author',author_id=author.id) }}" class="label label-danger">Delete</a>
+          </td>
+        </tr>
+      {% endfor %}
+      <tr>
+        <td>
+          <a href="{{ url_for('main.add_author') }}" class="label label-primary">Add author</a>
+        </td>
+      </tr>
+    </table>
+  </div>
+{% endblock %}
