@@ -3,5 +3,5 @@ venv/
 try/
 *.pyc
 source/
-
-
+*.sqlite
+__pycache__/
