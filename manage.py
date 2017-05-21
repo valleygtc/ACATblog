@@ -1,3 +1,4 @@
+#!usr/bin/python3.5
 import os
 from flask import current_app
 from flask_script import Manager, Shell
