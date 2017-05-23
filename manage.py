@@ -30,6 +30,15 @@ def init_db():
     Constant.init()
     current_app.logger.info('initialize database done!')
 
+@manager.command
+def crawl():
+    current_app.logger.info('Crawler begin.')
+    Article.update()
+    current_app.logger.info('Crawler done.')
+    current_app.logger.info('Update table Constant begin.')
+    Constant.update()
+    current_app.logger.info('Update table Constant done.')
+
 
 if __name__ == '__main__':
     manager.run()
