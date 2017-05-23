@@ -31,9 +31,9 @@
         <div class="col-md-8">
           <nav class="collapse navbar-collapse" id="myNavbar" role="navigation">
             <ul class="nav navbar-nav navbar-right menu">
-              <li><a href="#page-top" class="page-scroll active">主页</a></li>
-              <li><a href="#section2" class="page-scroll">博客</a></li>
-              <li><a href="#work" class="page-scroll">个人</a></li>
+              <li><a href="{{ url_for('main.index') }}#page-top" class="page-scroll active">主页</a></li>
+              <li><a href="{{ url_for('main.index') }}#section2" class="page-scroll">博客</a></li>
+              <li><a href="{{ url_for('main.index') }}#work" class="page-scroll">个人</a></li>
               <!--<li><a href="#section4" class="page-scroll">榜单</a></li>-->
               {% if session.get('login') %}
                 <li><a href="{{ url_for('main.manage') }}">管理</a></li>
@@ -88,8 +88,10 @@
 {% endblock %}
 
 {% block content %}
+  <div class="page_content">
     {% block page_content %}
     {% endblock %}
+  </div>
 {% endblock %}
 
 {% block scripts %}
