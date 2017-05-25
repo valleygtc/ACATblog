@@ -42,10 +42,17 @@ class HerokuConfig(ProductConfig):
         file_handler.setLevel(logging.WARNING)
         app.logger.addHandler(file_handler)
 
+class Aliyun(ProductConfig):
+    @staticmethod
+    def init_app(app):
+        ProductConfig.init_app(app)
+
 
 config = {
     'develope': DevConfig,
     'production': ProductConfig,
+    'heroku':HerokuConfig,
+    'aliyun':Aliyun,
 
     'default': DevConfig,
 }
