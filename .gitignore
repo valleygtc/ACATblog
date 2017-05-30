@@ -5,4 +5,4 @@ try/
 source/
 *.sqlite
 __pycache__/
-aliyun*
+aliyun_env.sh
