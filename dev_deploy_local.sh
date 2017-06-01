@@ -1,7 +1,7 @@
 #!bin/bash
 
 #purpose:
-#To deploy ACATblog locally to try
+#To deploy ACATblog locally for dev
 
 #do:
 #1.from dev_env.sh export env variables
@@ -19,7 +19,9 @@
 
 source ./venv/bin/activate
 source ./dev_env.sh
+
 mod_wsgi-express setup-server acatblog.wsgi \
 --user=www-data --group=www-data \
 --server-root=/etc/mod_wsgi-express-80
+
 /etc/mod_wsgi-express-80/apachectl start
