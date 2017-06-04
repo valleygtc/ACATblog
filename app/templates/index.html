@@ -103,7 +103,7 @@
                           <div class="col-md-10 col-sm-12 col-xs-12">
                             <h4>{{ article.title }}</h4>
                             <p>{{ article.content_text[:100] }}</p>
-                            <p class="pull-left"><span class="glyphicon glyphicon-eye-open"></span>&nbsp;1
+                            <p class="pull-left"><span class="glyphicon glyphicon-eye-open"></span>&nbsp;{{ article.read_times }}
                             </p>
                             <a href="{{ article.url }}" target="_blank">
                               <button class="btn btn-warning btn-sm pull-right">阅读全文</button>
