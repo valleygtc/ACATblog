@@ -29,7 +29,7 @@ class Article(db.Model):
     url = db.Column(db.String(80))
     pub_date = db.Column(db.DateTime)
     author_id = db.Column(db.Integer, db.ForeignKey('author.id'))
-    author = db.relationship('Author', backref=db.backref('articles'))
+    author = db.relationship('Author', backref=db.backref('articles',order_by=pub_date.desc()))
     content_html = db.Column(db.Text)
     content_text = db.Column(db.Text)
     read_times = db.Column(db.Integer)
