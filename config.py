@@ -17,7 +17,7 @@ class DevConfig(BaseConfig):
     ADMIN_USERNAME = 'admin'
     ADMIN_PASSWORD = 'admin'
     SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URI') or \
-                              'sqlite:///' + os.path.join(basedir, 'dev-db.sqlite')
+                              'sqlite:///' + os.path.join(basedir, 'db.sqlite')
 
 
 class ProductConfig(BaseConfig):

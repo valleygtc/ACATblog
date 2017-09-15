@@ -121,6 +121,14 @@ def delete_author(author_id):
     return render_template('delete_author.html', form=form, author=author)
 
 
+@main.route('/redirect-to-sogou')
+def tosogou():
+    from wechatsogou import WechatSogouAPI
+    wx_api = WechatSogouAPI()
+    profile_url = wx_api.get_gzh_info('xuptcal')['profile_url']
+    return redirect(profile_url)
+
+
 @main.app_template_filter('group')
 def group(authors, number):
     groups = []

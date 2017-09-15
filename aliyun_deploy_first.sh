@@ -22,7 +22,7 @@
 source ./venv/bin/activate
 source ./aliyun_env.sh
 
-python3 ./manage.py init_db
+flask init_db
 
 mod_wsgi-express setup-server acatblog.wsgi \
 --host=172.18.85.108 --port=80 \
