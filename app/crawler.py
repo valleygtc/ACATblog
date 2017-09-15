@@ -22,7 +22,7 @@ def get_articles(author, from_date):
         if author.blog_type == 'sina':
             get_articles_sina(author, from_date)
     except:
-        current_app.logger.wraning('crawler:' + author.name + 'get_articles wrong!')
+        current_app.logger.warning('crawler:' + author.name + 'get_articles wrong!')
     else:
         current_app.logger.info('crawler:' + author.name + 'get_articles successfully!')
 
