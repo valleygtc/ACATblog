@@ -1,300 +1,38 @@
-{% extends "base.html" %}
-{% block page_content %}
-  <div class="container-fluid main" id="page-top">
-    <div class="row">
-      <div class="col-md-12 backg">
-        <div class="col-md-4 col-md-offset-4 inner col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3">
-          <div class="text-box">
-            <p class="intro">ACAT</p>
-            <h2>实 验 室 群 博 客</h2>
-            <h3>分享知识丨积累点滴</h3>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-12 some-notes">
-        <div class="title">
-          <h2>Welcome To Acat Blog System</h2>
-        </div>
-        <div class="desc">
-          <p>You can use this system to view all the blog information of the members of the Computer Application
-            Technology Association.
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>XUPT ACAT群博</title>
+  <link rel="stylesheet" href="../static/css/w3.css"/>
+  <link rel="stylesheet" href="../static/css/style.css"/>
+</head>
 
-  <div class="container-fluid features" id="section2">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12 blogList">
-          <h2 class="text-center features-text">群博列表</h2>
-          {% for article in articles %}
-            <div class="col-md-6 col-sm-12 col-xs-12 icon-box blogListCont">
-              <div class="col-md-2 col-sm-2 col-xs-12">
-                <div class="iconing">
-                  <a href="{{ article.author.blog_address }}" target="_blank"><img
-                          src="{{ url_for('main.avatar',author_id=article.author.id) }}"
-                          class="img-circle img-thumbnail" width="80px"
-                          alt="{{ article.author.name }}"></a>
-                  <h5>{{ article.author.name }}</h5>
-                  <h5>{{ article.pub_date.strftime('%Y-%m-%d') }}</h5>
-                </div>
-              </div>
-              <div class="col-md-9 col-md-offset-1 col-sm-10 col-xs-12 icon-text-box">
-                <h4>{{ article.title }}</h4>
-                <!--<p>{{ article.content_text[:60] }}</p>-->
-                <div class="pull-left"><span class="glyphicon glyphicon-eye-open"></span>&nbsp;{{ article.read_times }}
-                </div>
-                <a href="{{ article.url }}" target="_blank">
-                  <button class="btn btn-warning btn-sm  pull-right">阅读全文</button>
-                </a>
-              </div>
-            </div>
-          {% endfor %}
-        </div>
-      </div>
-    </div>
-  </div>
+<body>
+<header class="w3-container w3-light-grey w3-border-bottom">
+  <img src="../static/images/ACAT.jpg" alt="ACATlogo" class="img-thumbnail" style="width: 50px;hight: 50px;"/>
+  description
+</header>
+<aside class="w3-container w3-light-grey w3-border">
+  {% for author in authors %}
+    <section class="w3-container w3-border-bottom">
+      <img src="{{ url_for('main.avatar',author_id=author.id) }}" alt="ACATlogo" class="img-thumbnail"/>
+      <a href="{{ author.blog_address }}">{{ author.name }}</a>
+    </section>
+  {% endfor %}
+</aside>
+<main class="w3-container">
+  {% for article in articles %}
+    <section class="w3-card-2">
+      <h4><a href="{{ article.url }}">{{ article.title }}</a></h4>
+      <p>{{ article.content_text[:300] }}</p>
+      <br/>
+      <span>{{ article.author.name }}</span>
+      <span>{{ article.pub_date.strftime('%Y-%m-%d') }}</>
+    </section>
+  {% endfor %}
 
-
-  <div class="container-fluid work" id="work">
-    <div class="container">
-      <div class="row" id="starts">
-        <div class="col-md-12 col-sm-12 col-xs-12 work-list">
-          <h2 class="text-center portfolio-text">个人博客</h2>
-          <div class="container carousel slide" id="photoList">
-            <div class="row carousel-inner photoListBox">
-              {% for group in authors|group(6) %}
-                <div class="item {% if loop.index0==0 %}active{% endif %}">
-                  {% for author in group %}
-                    <div class="col-md-2 col-sm-4 col-xs-4">
-                      <a data-target="#myCarousel" data-slide-to="{{ author.id-1 }}"><!--这里暂时用的id，以后可能会出问题-->
-                        <img src="{{ url_for('main.avatar',author_id=author.id) }}" class="img-circle"
-                             width="60px"/></a>
-                      <p>{{ author.name }}</p>
-                    </div>
-                  {% endfor %}
-                </div>
-              {% endfor %}
-            </div>
-            <!-- 轮播头像（Carousel）导航 -->
-            <ol class="carousel-indicators photoListli">
-              {% for group_number in range(authors|group(6)|length) %}
-                <li data-target="#photoList" data-slide-to="{{ group_number }}"
-                    {% if group_number==0 %}class="active"{% endif %}></li>
-              {% endfor %}
-            </ol>
-          </div>
-
-          <div id="myCarousel" class="carousel slide">
-            <div class="container">
-              <!-- 轮播（Carousel）内容 -->
-              <div class="row carousel-inner">
-                {% for author in authors %}
-                  <div class="item personalList {% if loop.index0==0 %}active{% endif %}">
-                    {% for article in author.articles %}
-                      <div class="container contListWr">
-                        <div class="row contListBox">
-                          <div class="col-md-1 col-sm-12 col-xs-12 contListTime">
-                            <h4>{{ article.pub_date.strftime('%m-%d') }}</h4>
-                            <h3>{{ article.pub_date.strftime('%Y') }}</h3>
-                          </div>
-                          <div class="col-md-10 col-sm-12 col-xs-12">
-                            <h4>{{ article.title }}</h4>
-                            <p>{{ article.content_text[:100] }}</p>
-                            <p class="pull-left"><span class="glyphicon glyphicon-eye-open"></span>&nbsp;{{ article.read_times }}
-                            </p>
-                            <a href="{{ article.url }}" target="_blank">
-                              <button class="btn btn-warning btn-sm pull-right">阅读全文</button>
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                    {% endfor %}
-                  </div>
-                {% endfor %}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="container-fluid countspace">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12 countbg">
-          <div class="col-xs-12 col-sm-3 col-md-3">
-            <div class="counter-item">
-              <i class="glyphicon glyphicon-user"></i>
-              <div class="timer" data-from="0" data-to="{{ constant.num_authors }}" data-speed="5000"
-                   data-refresh-interval="50"></div>
-              <h4>协会人数</h4>
-            </div>
-          </div>
-          <div class="col-xs-12 col-sm-3 col-md-3">
-            <div class="counter-item">
-              <i class="glyphicon glyphicon-book"></i>
-              <div class="timer" data-from="0" data-to="{{ constant.num_articles }}" data-speed="5000"
-                   data-refresh-interval="50"></div>
-              <h4>发表文章</h4>
-            </div>
-          </div>
-          <div class="col-xs-12 col-sm-3 col-md-3">
-            <div class="counter-item">
-              <i class="glyphicon glyphicon-pencil"></i>
-              <div class="timer" data-from="0" data-to="{{ constant.num_original }}" data-speed="5000"
-                   data-refresh-interval="50"></div>
-              <h4>原创文章</h4>
-            </div>
-          </div>
-          <div class="col-xs-12 col-sm-3 col-md-3">
-            <div class="counter-item">
-              <i class="glyphicon glyphicon-sort"></i>
-              <div class="timer" data-from="0" data-to="{{ constant.num_unoriginal }}" data-speed="5000"
-                   data-refresh-interval="50"></div>
-              <h4>转载文章</h4>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!--
-    <div class="container-fluid contact" id="section4">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12">
-            <h2 class="text-center portfolio-text">博客榜单</h2>
-            <div class="col-md-4 col-sm-12 col-xs-12 text-center rankList rankListOne">
-              <a href=""><img src="userImg/1.jpg" class="img-circle img-thumbnail" width="60px" alt="哆啦A梦"
-                              title="哆啦A梦"></a>
-              <h4>人气排行榜</h4>
-            </div>
-            <div class="col-md-4 col-sm-12 col-xs-12 text-center rankList rankListTwo">
-              <a href=""><img src="userImg/1.jpg" class="img-circle img-thumbnail" width="60px" alt="蜡笔小新"
-                              title="蜡笔小新"></a>
-              <h4>活跃排行榜</h4>
-            </div>
-            <div class="col-md-4 col-sm-12 col-xs-12 text-center rankList rankListThree">
-              <a href=""><img src="userImg/1.jpg" class="img-circle img-thumbnail" width="60px" alt="奥特曼"
-                              title="奥特曼"></a>
-              <h4>积分排行榜</h4>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  -->
-
-  <div class="container-fluid notes">
-    <div class="row">
-      <div class="col-md-12 col-sm-12 col-xs-12 notes-bg">
-        <div class="container">
-          <div class="col-md-8 col-sm-8 col-xs-12">
-            <p>计算机应用技术协会，成立于2014年4月</p>
-            <p>理念：Nothing Is Impossible</p>
-            <p>西邮图书馆一楼B103</p>
-          </div>
-          <div class="col-md-offset-1 col-md-2 col-md-offset-1 col-sm-offset-1 col-sm-2 col-sm-offset-1 col-xs-12">
-            <a href="http://222.24.63.100:9149/CAL/" target="_blank">
-              <button type="button" class="btn btn-default btneff">Read More</button>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="container-fluid footer">
-    <div class="row">
-      <div class="col-md-12">
-        <p>Copyright &copy; 2017.Company Name All Rights Reserved.<a href="http://222.24.63.100:9149/CAL/"
-                                                                     target="_blank"
-                                                                     title="计算机应用技术协会">计算机应用技术协会</a>
-          - 西安邮电大学 </p>
-      </div>
-    </div>
-  </div>
-{% endblock %}
-
-{% block scripts %}
-  {{ super() }}
-  <script>
-    $(document).ready(function () {
-      $(document).on("scroll", onScroll);
-      $('a[href^="#"]').on('click', function (e) {
-        e.preventDefault();
-        $(document).off("scroll");
-
-        $('a').each(function () {
-          $(this).removeClass('active');
-        })
-        $(this).addClass('active');
-
-        var target = this.hash;
-        $target = $(target);
-        $('html, body').stop().animate({
-          'scrollTop': $target.offset().top
-        }, 500, 'swing', function () {
-          window.location.hash = target;
-          $(document).on("scroll", onScroll);
-        });
-      });
-    });
-    function onScroll(event) {
-      var scrollPosition = $(document).scrollTop();
-      $('nav .page-scroll').each(function () {
-        var currentLink = $(this);
-        var refElement = $(currentLink.attr("href"));
-        if (refElement.position().top <= scrollPosition && refElement.position().top + refElement.height() > scrollPosition) {
-          $('nav ul li a').removeClass("active");
-          currentLink.addClass("active");
-        }
-        else {
-          currentLink.removeClass("active");
-        }
-      });
-    }
-  </script>
-
-  <script type="text/javascript">
-    $(document).ready(function () {
-      // 所有博客列表分页
-      $('.blogList').kkPages({
-        PagesClass: '.blogListCont',		//需要分页元素
-        PagesMth: 6,						//每页显示个数
-        PagesNavMth: 5					//导航显示个数
-      })
-      // 个人博客列表分页
-      $('.personalList').kkPages({
-        PagesClass: '.contListWr',		//需要分页元素
-        PagesMth: 4,						//每页显示个数
-        PagesNavMth: 5					//导航显示个数
-      })
-    })
-  </script>
-
-  <script type="text/javascript">
-    jQuery(function ($) {
-      // custom formatting example
-      $('.timer').data('countToOptions', {
-        formatter: function (value, options) {
-          return value.toFixed(options.decimals).replace(/\B(?=(?:\d{3})+(?!\d))/g, ',');
-        }
-      });
-
-      // start all the timers
-      $('#starts').waypoint(function () {
-        $('.timer').each(count);
-      });
-
-      function count(options) {
-        var $this = $(this);
-        options = $.extend({}, options || {}, $this.data('countToOptions') || {});
-        $this.countTo(options);
-      }
-    });
-  </script>
-{% endblock %}
+</main>
+<footer class="w3-container">XUPT ACAT群博</br>西安邮电大学计算机应用技术协会</br></footer>
+</body>
+</html>

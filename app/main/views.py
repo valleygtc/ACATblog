@@ -13,8 +13,8 @@ def index():
     form = LoginForm()
     authors = Author.query.all()
     articles = Article.query.order_by(Article.pub_date.desc()).all()
-    constant = Constant.query.get(1)
-    return render_template('index.html', login_form=form, authors=authors, articles=articles, constant=constant)
+    #constant = Constant.query.get(1)
+    return render_template('index.html', login_form=form, authors=authors, articles=articles)
 
 
 @main.route('/avatar/<int:author_id>')
