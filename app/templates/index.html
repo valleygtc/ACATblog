@@ -4,35 +4,62 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>XUPT ACAT群博</title>
-  <link rel="stylesheet" href="../static/css/w3.css"/>
-  <link rel="stylesheet" href="../static/css/style.css"/>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/w3.css') }}"/>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"/>
 </head>
 
 <body>
-<header class="w3-container w3-light-grey w3-border-bottom">
-  <img src="../static/images/ACAT.jpg" alt="ACATlogo" class="img-thumbnail" style="width: 50px;hight: 50px;"/>
-  description
+<header class="w3-container background-gray w3-border-bottom">
+  <img src="{{ url_for('static', filename="images/ACAT.jpg") }}" alt="ACATlogo" class="img-logo"/>
+  <span class="header-title">XUPT ACAT 群博网站</span>
 </header>
-<aside class="w3-container w3-light-grey w3-border">
+
+
+<aside class="w3-container background-gray w3-border">
   {% for author in authors %}
-    <section class="w3-container w3-border-bottom">
+    <section class="w3-container w3-border-bottom author-container">
       <img src="{{ url_for('main.avatar',author_id=author.id) }}" alt="ACATlogo" class="img-thumbnail"/>
       <a href="{{ author.blog_address }}">{{ author.name }}</a>
     </section>
   {% endfor %}
 </aside>
-<main class="w3-container">
+
+<main class="w3-container background-gray w3-border">
   {% for article in articles %}
-    <section class="w3-card-2">
-      <h4><a href="{{ article.url }}">{{ article.title }}</a></h4>
+    <section class="w3-container w3-border-bottom article-section">
+      <h3><a href="{{ article.url }}">{{ article.title }}</a></h3>
       <p>{{ article.content_text[:300] }}</p>
       <br/>
-      <span>{{ article.author.name }}</span>
-      <span>{{ article.pub_date.strftime('%Y-%m-%d') }}</>
+      <div class="article-footer">
+        <span class="article-author">
+          <a href="{{ article.author.blog_address }}" target="_blank">{{ article.author.name }}</a>
+        </span>
+        <span class="article-time">{{ article.pub_date.strftime('%Y-%m-%d') }}</span>
+      </div>
     </section>
   {% endfor %}
-
+  <div class="center-container">
+    <div class="pagination">
+      <a href="{{ url_for('main.index', page=pagination.prev_num) }}">&laquo;</a>
+      {%- for page in pagination.iter_pages(left_edge=2, left_current=2, right_current=5, right_edge=2) %}
+        {% if page %}
+          {% if page != pagination.page %}
+            <a href="{{ url_for('main.index', page=page) }}">{{ page }}</a>
+          {% else %}
+            <a href="#" class="active">{{ page }}</a>
+          {% endif %}
+        {% else %}
+          <a href="#"><span class=ellipsis>…</span></a>
+        {% endif %}
+      {%- endfor %}
+      <a href="{{ url_for('main.index', page=pagination.next_num) }}">&raquo;</a>
+    </div>
+  </div>
 </main>
-<footer class="w3-container">XUPT ACAT群博</br>西安邮电大学计算机应用技术协会</br></footer>
+
+
+<footer id="footer" class="w3-container background-gray">
+  XUPT ACAT群博</br>西安邮电大学 - 计算机应用技术协会
+</footer>
 </body>
 </html>

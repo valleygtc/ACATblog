@@ -8,18 +8,113 @@ aside {
 }
 
 main {
-  float: left;
-  width: 85%
+  float: right;
+  width: 84%
 }
 
 footer {
   clear: both;
 }
 
-.img-thumbnail {
-  width: 30px;
-  hight: 30px;
+.img-logo {
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
   background-color: #fff;
   border: 1px solid #ddd;
+  margin-left: 50px;
+}
+
+.img-thumbnail {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #fff;
+  border: 1px solid #ddd;
+}
+
+aside {
+  margin-top: 20px;
+}
+
+main {
+  margin-top: 20px;
+}
+
+.header-title {
+  font-size: 1.9em;
+}
+
+.background-gray {
+  background-color: #f1f1f1
+}
+
+.article-section {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+}
+
+a {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+main a {
+  color: #cc4400;
+}
+
+.article-footer {
+  float: right;
+}
+
+.article-author {
+  font-size: 1.2em;
+}
+
+.article-time {
+  font-size: 1.2em;
+  font-style: italic;
+}
+
+.author-container {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.center-container {
+  text-align: center;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.pagination {
+  display: inline-block;
+}
+
+.pagination a {
+  color: black;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+  transition: background-color .3s;
+  border: 1px solid #ddd;
+  margin: 0 4px;
+}
+
+.pagination a.active {
+  background-color: #4CAF50;
+  color: white;
+  border: 1px solid #4CAF50;
+}
+
+.pagination a:hover:not(.active) {
+  background-color: #ddd;
+}
+
+#footer {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  text-align: center;
+  font-size: 1.2em;
 }

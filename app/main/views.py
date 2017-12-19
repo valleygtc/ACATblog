@@ -1,4 +1,4 @@
-from flask import render_template, session, Response
+from flask import render_template, session, Response, request
 from . import main
 from ..decorators import login_required
 from ..models import Author, Article, Constant
@@ -7,14 +7,22 @@ from .form import LoginForm, AddAuthorForm, ModifyAuthorForm, DeleteAuthorConfir
 from flask import current_app, flash, redirect, url_for
 from datetime import datetime
 
+# 线上原版，使用JavaScript实现分页功能
+# @main.route('/')
+# def index():
+#     form = LoginForm()
+#     authors = Author.query.all()
+#     articles = Article.query.order_by(Article.pub_date.desc()).all()
+#     # constant = Constant.query.get(1)
+#     return render_template('index.html', login_form=form, authors=authors, articles=articles)
 
 @main.route('/')
 def index():
-    form = LoginForm()
     authors = Author.query.all()
-    articles = Article.query.order_by(Article.pub_date.desc()).all()
-    #constant = Constant.query.get(1)
-    return render_template('index.html', login_form=form, authors=authors, articles=articles)
+    page = request.args.get('page', 1, type=int)
+    pagination = Article.query.order_by(Article.pub_date.desc()).paginate(page, per_page=10)
+    articles = pagination.items
+    return render_template('index.html', authors=authors, articles=articles, pagination=pagination)
 
 
 @main.route('/avatar/<int:author_id>')
@@ -22,17 +30,6 @@ def avatar(author_id):
     author = Author.query.filter_by(id=author_id).first()
     resp = Response(author.avatar, mimetype='image/jpg')
     return resp
-
-
-'''
-@main.route('/author/<int:id>')
-def author(id):
-    authors = Author.query.all()
-    page = request.args.get('page', 1, type=int)
-    pagination = Article.query.filter_by(author_id=id).order_by(Article.pub_date.desc()).paginate(page, per_page=10)
-    articles = pagination.items
-    return render_template('index.html', pagination=pagination, authors=authors, articles=articles)
-'''
 
 
 @main.route('/login', methods=['GET', 'POST'])
