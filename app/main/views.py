@@ -7,6 +7,7 @@ from .form import LoginForm, AddAuthorForm, ModifyAuthorForm, DeleteAuthorConfir
 from flask import current_app, flash, redirect, url_for
 from datetime import datetime
 
+
 # 线上原版，使用JavaScript实现分页功能
 # @main.route('/')
 # def index():
@@ -32,18 +33,32 @@ def avatar(author_id):
     return resp
 
 
-@main.route('/login', methods=['GET', 'POST'])
-def login():
+@main.route('/admin', methods=['GET', 'POST'])
+def adminLogin():
     session['login'] = False
-    form = LoginForm()
-    if form.validate_on_submit():
-        if form.username.data == current_app.config['ADMIN_USERNAME'] and \
-                        form.password.data == current_app.config['ADMIN_PASSWORD']:
+    if request.method == 'POST':
+        if request.form['username'] == current_app.config['ADMIN_USERNAME'] and \
+                        request.form['password'] == current_app.config['ADMIN_PASSWORD']:
             session['login'] = True
             flash('Welcome Admin')
+            return redirect(url_for('main.manage'))
         else:
             flash('Username or Password wrong!')
-    return redirect(url_for('main.index'))
+    return render_template('admin_login.html')
+
+
+# @main.route('/login', methods=['GET', 'POST'])
+# def login():
+#     session['login'] = False
+#     form = LoginForm()
+#     if form.validate_on_submit():
+#         if form.username.data == current_app.config['ADMIN_USERNAME'] and \
+#                         form.password.data == current_app.config['ADMIN_PASSWORD']:
+#             session['login'] = True
+#             flash('Welcome Admin')
+#         else:
+#             flash('Username or Password wrong!')
+#     return redirect(url_for('main.index'))
 
 
 @main.route('/logout')
@@ -118,6 +133,7 @@ def delete_author(author_id):
     return render_template('delete_author.html', form=form, author=author)
 
 
+# 官网上的近期活动：公众号文章
 @main.route('/redirect-to-sogou')
 def tosogou():
     from wechatsogou import WechatSogouAPI

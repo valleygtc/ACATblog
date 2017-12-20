@@ -1,0 +1,22 @@
+{% extends "manage_base.html" %}
+{% block main %}
+  <main>
+    <form id="loginForm" action="{{ url_for('main.adminLogin') }}" method="post">
+      <div class="img-container">
+        <img src="{{ url_for("static", filename="images/ACAT.jpg") }}" alt="ACAT logo" class="main-logo">
+      </div>
+
+      <div class="input-container">
+        <label><b>帐号</b></label>
+        <input type="text" placeholder="Enter Username" name="username" required>
+
+        <label><b>密码</b></label>
+        <input type="password" placeholder="Enter Password" name="password" required>
+
+        <button type="submit">Login</button>
+      </div>
+    </form>
+  </main>
+{% endblock %}
+
+
