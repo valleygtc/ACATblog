@@ -1,0 +1,15 @@
+{% extends "manage_base.html" %}
+{% block main %}
+  <main class="manage-div">
+    <form class="normal-form" action="" method="post" enctype="multipart/form-data">
+      <p>请确认删除author（id:{{ author.id }},name:{{ author.name }})，否则直接关闭本页面即可</p>
+      <div class="form-group">
+        <label for="flag">Flag True</label>
+        <input id="flag" type="checkbox" class="w3-check" name="confirm" value="y"/>
+      </div>
+      <div class="form-group">
+        <button type="submit">确认添加</button>
+      </div>
+    </form>
+  </main>
+{% endblock %}

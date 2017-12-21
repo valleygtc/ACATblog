@@ -1,7 +1,7 @@
 {% extends "manage_base.html" %}
 {% block main %}
-  <main class="manage_div">
-    <table class="manage_table">
+  <main class="manage-div">
+    <table class="manage-table">
       <tr>
         <th>Avatar</th>
         <th>id</th>
@@ -14,24 +14,20 @@
       </tr>
       {% for author in authors %}
         <tr>
-          <td><img src="{{ url_for('main.avatar',author_id=author.id) }}" class="img-circle" width="25px"
-                   alt="{{ author.name }}"></td>
+          <td><img src="{{ url_for('main.avatar',author_id=author.id) }}" class="img-thumbnail"
+                   alt="{{ author.name }}"/></td>
           <td>{{ author.id }}</td>
           <td>{{ author.name }}</td>
           <td>{{ author.blog_type }}</td>
           <td>{{ author.blog_address }}</td>
           <td>{{ author.flag }}</td>
-          <td><a href="{{ url_for('main.modify_author',author_id=author.id) }}" class="label label-primary">Modify</a>
+          <td><a href="{{ url_for('main.author_modify',author_id=author.id) }}" class="w3-button w3-blue">Modify</a>
           </td>
-          <td><a href="{{ url_for('main.delete_author',author_id=author.id) }}" class="label label-danger">Delete</a>
+          <td><a href="{{ url_for('main.author_delete',author_id=author.id) }}" class="w3-button w3-red">Delete</a>
           </td>
         </tr>
       {% endfor %}
-      <tr>
-        <td>
-          <a href="{{ url_for('main.add_author') }}" class="label label-primary">Add author</a>
-        </td>
-      </tr>
     </table>
+    <div><a href="{{ url_for('main.author_add') }}" class="w3-button w3-blue">Add author</a></div>
   </main>
 {% endblock %}

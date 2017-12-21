@@ -1,0 +1,23 @@
+{% extends "manage_base.html" %}
+{% block main %}
+  <main class="manage-div">
+    <form  action="" id="manage-form" method="post">
+      <input name="name" type="text" value="{{ form.name }}" required/>
+      <label for=blog_type">Blog Type</label>
+      <select name="blog_type" required>
+        <option value="csdn" selected>{{ form.blog_type }}</option>
+        <option value="cnblogs">cnblogs</option>
+        <option value="sina">sina</option>
+        <option value="others">others</option>
+      </select>
+      <label for="blog_address">Blog Address</label>
+      <input name="blog_address" type="text" value="http://blog.csdn.net/No_Endless" required/>
+      <label>
+        <input checked="" id="flag" name="flag" type="checkbox" value="y"> Flag True
+      </label>
+      <label class="control-label" for="avatar">Avatar</label>
+      <input id="avatar" name="avatar" type="file">
+      <input class="btn btn-default" id="submit" name="submit" type="submit" value="Submit">
+    </form>
+  </main>
+{% endblock %}

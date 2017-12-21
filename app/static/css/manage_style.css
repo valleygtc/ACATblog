@@ -1,7 +1,15 @@
+/* 页面整体layout */
 body {
   background-color: #f1f1f1;
 }
 
+footer {
+  clear: both;
+  text-align: center;
+  font-size: 1.2em;
+}
+
+/* 顶部navbar相关 */
 #manage-nav .nav-logo {
   width: 45px;
   height: 45px;
@@ -34,12 +42,9 @@ body {
     background-color: #111111;
 }
 
-
+/* login页面相关 */
 #loginForm {
   text-align: center;
-  margin: 0px auto;
-  border: 3px solid #f1f1f1;
-  width: 50%;
 }
 
 #loginForm .img-container {
@@ -52,11 +57,13 @@ body {
   border-radius: 50%;
 }
 
-#loginForm .input-container {
-  padding: 16px;
+/* normal-form class提供了基本的form格式 */
+.normal-form {
+  margin: 0px auto;
+  width: 50%;
 }
 
-#loginForm input {
+.normal-form input[type=text], .normal-form input[type=password] {
   width: 100%;
   padding: 12px 20px;
   margin: 8px 0;
@@ -65,7 +72,7 @@ body {
   box-sizing: border-box;
 }
 
-#loginForm button {
+.normal-form button {
   background-color: #4CAF50;
   color: white;
   padding: 14px 20px;
@@ -75,30 +82,51 @@ body {
   width: 100%;
 }
 
-#loginForm button:hover {
+.normal-form button:hover {
   opacity: 0.8;
 }
 
-
-
-.manage_div {
-  padding: 100px;
-  border-radius: 5px;
-  background-color: #f2f2f2;
+.normal-form .form-group {
+  margin-bottom: 15px;
 }
 
-.manage_table {
-  font-family: 'Roboto', sans-serif;
+.normal-form .form-group label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 1.2em;
+}
+
+
+/* manage页面相关 */
+.manage-div {
+  padding: 100px;
+}
+
+.manage-table {
   border-collapse: collapse;
   width: 100%;
 }
 
-.manage_table td, .manage_table th {
+.manage-table td, .manage-table th {
   border: 1px solid #dddddd;
   text-align: left;
   padding: 8px;
 }
 
-.manage_table tr:nth-child(even) {
+.manage-table tr:nth-child(even) {
   background-color: #dddddd;
+}
+
+.img-thumbnail {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #fff;
+  border: 1px solid #ddd;
+}
+
+/* author_modify相关 */
+#manage-form {
+  margin: 0px auto;
+  width: 50%;
 }

@@ -4,18 +4,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>XUPT ACAT群博</title>
+  <link rel="shortcut icon" href="{{ url_for('static', filename='images/ACAT.ico') }}" type="image/x-icon">
+  <link rel="icon" href="{{ url_for('static', filename='images/ACAT.ico') }}" type="image/x-icon">
+
   <link rel="stylesheet" href="{{ url_for('static', filename='css/w3.css') }}"/>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"/>
 </head>
 
 <body>
-<header class="w3-container background-gray w3-border-bottom">
+<header class="w3-container w3-padding-24 w3-bottombar">
   <img src="{{ url_for('static', filename="images/ACAT.jpg") }}" alt="ACATlogo" class="img-logo"/>
   <span class="header-title">XUPT ACAT 群博网站</span>
 </header>
 
 
-<aside class="w3-container background-gray w3-border">
+<aside class="w3-container w3-border">
   {% for author in authors %}
     <section class="w3-container w3-border-bottom author-container">
       <img src="{{ url_for('main.avatar',author_id=author.id) }}" alt="ACATlogo" class="img-thumbnail"/>
@@ -24,9 +27,9 @@
   {% endfor %}
 </aside>
 
-<main class="w3-container background-gray w3-border">
+<main class="w3-container w3-border">
   {% for article in articles %}
-    <section class="w3-container w3-border-bottom article-section">
+    <section class="w3-container w3-padding-24 w3-border-bottom">
       <h3><a href="{{ article.url }}">{{ article.title }}</a></h3>
       <p>{{ article.content_text[:300] }}</p>
       <br/>
@@ -38,7 +41,7 @@
       </div>
     </section>
   {% endfor %}
-  <div class="center-container">
+  <div class="pagination-container w3-padding-16">
     <div class="pagination">
       <a href="{{ url_for('main.index', page=pagination.prev_num) }}">&laquo;</a>
       {%- for page in pagination.iter_pages(left_edge=2, left_current=2, right_current=5, right_edge=2) %}
@@ -49,7 +52,7 @@
             <a href="#" class="active">{{ page }}</a>
           {% endif %}
         {% else %}
-          <a href="#"><span class=ellipsis>…</span></a>
+          <a id="a-disabled" href="#">…</a>
         {% endif %}
       {%- endfor %}
       <a href="{{ url_for('main.index', page=pagination.next_num) }}">&raquo;</a>
@@ -58,7 +61,7 @@
 </main>
 
 
-<footer id="footer" class="w3-container background-gray">
+<footer class="w3-container w3-padding-24 w3-topbar">
   XUPT ACAT群博</br>西安邮电大学 - 计算机应用技术协会
 </footer>
 </body>

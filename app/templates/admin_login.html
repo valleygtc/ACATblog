@@ -1,17 +1,18 @@
 {% extends "manage_base.html" %}
 {% block main %}
   <main>
-    <form id="loginForm" action="{{ url_for('main.adminLogin') }}" method="post">
+    <form id="loginForm" class="normal-form" action="" method="post">
       <div class="img-container">
         <img src="{{ url_for("static", filename="images/ACAT.jpg") }}" alt="ACAT logo" class="main-logo">
+        <h1>ACAT管理员登录</h1>
       </div>
 
-      <div class="input-container">
+      <div class="w3-container w3-padding-24">
         <label><b>帐号</b></label>
-        <input type="text" placeholder="Enter Username" name="username" required>
+        <input type="text" placeholder="Username" name="username" required/>
 
         <label><b>密码</b></label>
-        <input type="password" placeholder="Enter Password" name="password" required>
+        <input type="password" placeholder="Password" name="password" required>
 
         <button type="submit">Login</button>
       </div>

@@ -1,8 +1,0 @@
-{% extends "manage_base.html" %}
-{% import "bootstrap/wtf.html" as wtf %}
-{% block main %}
-  <main class="manage_div">
-    <p>请确认删除author(id:{{ author.id }},name:{{ author.name }}),否则直接关闭本页面即可</p>
-    {{ wtf.quick_form(form) }}
-  </main>
-{% endblock %}

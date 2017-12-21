@@ -8,37 +8,40 @@
   <link rel="shortcut icon" href="{{ url_for('static', filename='images/ACAT.ico') }}" type="image/x-icon">
   <link rel="icon" href="{{ url_for('static', filename='images/ACAT.ico') }}" type="image/x-icon">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/manage_style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/w3.css') }}"/>
 </head>
 <body>
 
 <nav id="manage-nav">
   <ul>
-{# TODO: 在导航栏左边加一个logo #}
+    {# TODO: 在导航栏左边加一个logo #}
     {#    <li><a href="{{ url_for('main.manage') }}">#}
     {#      <img src="{{ url_for('static', filename="images/ACAT.jpg") }}"#}
     {#           alt="ACATlogo" class="nav-logo"/>#}
     {#    </a></li>#}
     {% if session.get('login') %}
       <li><a href="{{ url_for('main.manage') }}">成员管理</a></li>
-      <li><a href="{{ url_for('main.logout') }}">注销</a></li>
+      <li><a href="{{ url_for('main.admin_logout') }}">注销</a></li>
     {% else %}
-      <li><a href="{{ url_for('main.adminLogin') }}">登录</a></li>
+      <li><a href="{{ url_for('main.admin_login') }}">登录</a></li>
     {% endif %}
   </ul>
 </nav>
 
 {# flash message呈现在这里 #}
-<div class="container">
-  {% for message in get_flashed_messages() %}
-    <div class="alert alert-warning">
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
-      {{ message }}
-    </div>
-  {% endfor %}
-</div>
+{% for message in get_flashed_messages() %}
+  <div class="w3-panel w3-red w3-display-container">
+    <button type="button" class="w3-display-topright" onclick="this.parentElement.style.display='none'">&times;</button>
+    {{ message }}
+  </div>
+{% endfor %}
 
 {% block main %}
 {% endblock %}
+
+<footer class="w3-container w3-padding-24 w3-topbar">
+  XUPT ACAT群博</br>西安邮电大学 - 计算机应用技术协会
+</footer>
 
 </body>
 </html>
