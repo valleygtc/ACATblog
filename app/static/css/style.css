@@ -59,6 +59,10 @@ a {
   border: 1px solid #ddd;
 }
 
+.grade-title {
+  cursor: pointer;
+}
+
 /* main相关 */
 main a {
   color: #cc4400;

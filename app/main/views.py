@@ -10,11 +10,24 @@ from datetime import datetime
 
 @main.route('/')
 def index():
-    authors = Author.query.all()
+    authors = Author.query.order_by(Author.grade.asc())
+    def select_grade(authors, grade):
+        group = []
+        for author in authors:
+            if author.grade == grade:
+                group.append(author)
+        return group
+    # grade_group为[[author,author...],[author,author...]...]的形式
+    grade_group = []
+    grade_group.append(select_grade(authors, 2014))
+    grade_group.append(select_grade(authors, 2015))
+    grade_group.append(select_grade(authors, 2016))
+    grade_group.append(select_grade(authors, 2017))
+
     page = request.args.get('page', 1, type=int)
     pagination = Article.query.order_by(Article.pub_date.desc()).paginate(page, per_page=10)
     articles = pagination.items
-    return render_template('index.html', authors=authors, articles=articles, pagination=pagination)
+    return render_template('index.html', grade_group = grade_group, articles=articles, pagination=pagination)
 
 
 @main.route('/avatar/<int:author_id>')

@@ -19,12 +19,18 @@
 
 
 <aside class="w3-container w3-border">
-  {% for author in authors %}
-    <section class="w3-container w3-border-bottom author-container">
-      <img src="{{ url_for('main.avatar',author_id=author.id) }}" alt="ACATlogo" class="img-thumbnail"/>
-      <a href="{{ author.blog_address }}">{{ author.name }}</a>
+  {% for grade in grade_group %}
+    <section class="w3-container w3-border-bottom author-container grade-group">
+      <h2 class="grade-title">{{ grade[0].grade }}级</h2>
+      {% for author in grade %}
+        <section class="w3-container w3-border-bottom author-container">
+          <img src="{{ url_for('main.avatar',author_id=author.id) }}" alt="ACATlogo" class="img-thumbnail"/>
+          <a href="{{ author.blog_address }}">{{ author.name }}</a>
+        </section>
+      {% endfor %}
     </section>
   {% endfor %}
+
 </aside>
 
 <main class="w3-container w3-border">
@@ -62,7 +68,29 @@
 
 
 <footer class="w3-container w3-padding-24 w3-topbar w3-center w3-xlarge">
-  XUPT ACAT群博</br>西安邮电大学 - 计算机应用技术协会
+  XUPT ACAT群博<br>西安邮电大学 - 计算机应用技术协会
 </footer>
+
+<script>
+    var grade_group = document.getElementsByClassName('grade-group')
+    for (i = 0; i < grade_group.length; i++) {
+        var grade_title = grade_group[i].getElementsByClassName('grade-title')[0]
+        grade_title.addEventListener('click', function () {
+            var authors = this.parentElement.getElementsByTagName('section')
+            for (j = 0; j < authors.length; j++) {
+                if (authors[j].style['display'] == 'none') {
+                    authors[j].style['display'] = 'block'
+                }
+                else {
+                    authors[j].style['display'] = 'none'
+                }
+            }
+        })
+        var authors = grade_group[i].getElementsByTagName('section')
+        for (j = 0; j < authors.length; j++) {
+            authors[j].style['display'] = 'none'
+        }
+    }
+</script>
 </body>
 </html>
