@@ -3,7 +3,7 @@ from . import main
 from ..decorators import login_required
 from ..models import Author, Article, Constant
 from .. import db
-from .form import LoginForm, AddAuthorForm, ModifyAuthorForm, DeleteAuthorConfirm
+# from .form import LoginForm, AddAuthorForm, ModifyAuthorForm, DeleteAuthorConfirm
 from flask import current_app, flash, redirect, url_for
 from datetime import datetime
 
@@ -78,26 +78,28 @@ def author_add():
 @main.route('/modify-author/<int:author_id>', methods=['GET', 'POST'])
 @login_required
 def author_modify(author_id):
-    form = ModifyAuthorForm()
     author = Author.query.filter_by(id=author_id).first()
-    if form.validate_on_submit():
-        author.name = form.name.data
-        author.blog_type = form.blog_type.data
-        author.blog_address = form.blog_address.data
-        author.flag = form.flag.data
-        if form.blog_type.data == 'others':
+    if request.method == 'POST':
+        author.name = request.form['name']
+        author.blog_type = request.form['blog_type']
+        author.blog_address = request.form['blog_address']
+        if request.form['flag'] == 'y' and not request.form['blog_type'] == 'others':
+            author.flag = True
+        else:
             author.flag = False
-        if form.avatar.data:
-            author.avatar = form.avatar.data.read()
+        a =  request.files['avatar'].read()
+        # 只有上传了avatar才会修改，未上传则不修改Author.avatar
+        if a:
+            author.avatar = a
         db.session.add(author)
         db.session.commit()
-        flash('Modify %s Successfully' % form.name.data)
+        flash('成功修改Author：%s的信息' % request.form['name'])
         return redirect(url_for('main.manage'))
-    else:
-        form.name.data = author.name
-        form.blog_type.data = author.blog_type
-        form.blog_address.data = author.blog_address
-        form.flag.data = author.flag
+    form = {}
+    form['name'] = author.name
+    form['blog_type'] = author.blog_type
+    form['blog_address'] = author.blog_address
+    form['flag'] = author.flag
     return render_template('author_modify.html', form=form)
 
 

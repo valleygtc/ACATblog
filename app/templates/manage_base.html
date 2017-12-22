@@ -28,11 +28,11 @@
   </ul>
 </nav>
 
-{# flash message呈现在这里 #}
+{# flash message #}
 {% for message in get_flashed_messages() %}
-  <div class="w3-panel w3-red w3-display-container">
+  <div class="w3-panel w3-blue w3-display-container">
     <button type="button" class="w3-display-topright" onclick="this.parentElement.style.display='none'">&times;</button>
-    {{ message }}
+    <p class="w3-large">{{ message }}</p>
   </div>
 {% endfor %}
 

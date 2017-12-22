@@ -1,23 +1,36 @@
 {% extends "manage_base.html" %}
 {% block main %}
-  <main class="manage-div">
-    <form  action="" id="manage-form" method="post">
-      <input name="name" type="text" value="{{ form.name }}" required/>
-      <label for=blog_type">Blog Type</label>
-      <select name="blog_type" required>
-        <option value="csdn" selected>{{ form.blog_type }}</option>
-        <option value="cnblogs">cnblogs</option>
-        <option value="sina">sina</option>
-        <option value="others">others</option>
-      </select>
-      <label for="blog_address">Blog Address</label>
-      <input name="blog_address" type="text" value="http://blog.csdn.net/No_Endless" required/>
-      <label>
-        <input checked="" id="flag" name="flag" type="checkbox" value="y"> Flag True
-      </label>
-      <label class="control-label" for="avatar">Avatar</label>
-      <input id="avatar" name="avatar" type="file">
-      <input class="btn btn-default" id="submit" name="submit" type="submit" value="Submit">
+  <main class="manage-div" xmlns="http://www.w3.org/1999/html">
+    {# 注意这里的enctype必须是 multipart/form-data ，否则request.files就是空的#}
+    <form class="normal-form" action="" method="post" enctype="multipart/form-data">
+      <div class="form-group">
+        <label>Name</label>
+        <input id="name" name="name" type="text" value="{{ form['name'] }}" required/>
+      </div>
+      <div class="form-group">
+        <label>Blog Type</label>
+        <select class="w3-select" id="blog_type" name="blog_type" required>
+          <option value="csdn" {% if form['blog_type'] == 'csdn' %} selected {% endif %}>csdn</option>
+          <option value="cnblogs" {% if form['blog_type'] == 'cnblogs' %} selected {% endif %}>cnblogs</option>
+          <option value="sina" {% if form['blog_type'] == 'sina' %} selected {% endif %}>sina</option>
+          <option value="others" {% if form['blog_type'] == 'others' %} selected {% endif %}>others</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Blog Address</label>
+        <input id="blog_address" name="blog_address" type="text" value="{{ form['blog_address'] }}" required/>
+      </div>
+      <div class="form-group">
+        <label for="flag">Flag True</label>
+        <input id="flag" type="checkbox" class="w3-check" name="flag" value="y" {% if form['flag'] == True %} checked {% endif %}/>
+      </div>
+      <div class="form-group">
+        <label>Avatar</label>
+        <input name="avatar" type="file"/>
+      </div>
+      <div class="form-group">
+        <button type="submit">确认添加</button>
+      </div>
     </form>
   </main>
 {% endblock %}

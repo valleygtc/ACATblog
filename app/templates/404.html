@@ -1,6 +1,5 @@
-{% extends 'manage_base.html' %}
-{% block main %}
-<main class="error_div">
-    <h1>404 Not Found.</h1>
-</main>
+{% extends 'error_base.html' %}
+{% block message %}
+  <h1>404 Not Found.</h1>
+  <p>貌似输错了URL哦。</p>
 {% endblock %}
