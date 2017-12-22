@@ -60,12 +60,13 @@ def author_add():
         flag = True
         if request.form['blog_type'] == 'others':
             flag = False
-        if 'avatar' not in request.files:
-            # 这里如果没有上传图片默认读取ACAT logo图片，如果图片移动了则会有问题，应该改一下。
-            avatar = open('app/static/images/ACAT.jpg', mode='rb').read()
+        # 这里如果没有上传图片默认读取ACAT logo图片，如果图片移动了则会有问题，应该改一下。
+        a = request.files['avatar'].read()
+        if a:
+            avatar = a
         else:
-            avatar = request.files['avatar'].read()
-        author = Author(name=request.form['name'], blog_type=request.form['blog_type'],
+            avatar = open('app/static/images/ACAT.jpg', mode='rb').read()
+        author = Author(name=request.form['name'], grade=int(request.form['grade']), blog_type=request.form['blog_type'],
                         blog_address=request.form['blog_address'],
                         last_get=datetime.now(), avatar=avatar, flag=flag)
         db.session.add(author)
@@ -81,6 +82,7 @@ def author_modify(author_id):
     author = Author.query.filter_by(id=author_id).first()
     if request.method == 'POST':
         author.name = request.form['name']
+        author.grade = request.form['grade']
         author.blog_type = request.form['blog_type']
         author.blog_address = request.form['blog_address']
         if request.form['flag'] == 'y' and not request.form['blog_type'] == 'others':
@@ -97,6 +99,7 @@ def author_modify(author_id):
         return redirect(url_for('main.manage'))
     form = {}
     form['name'] = author.name
+    form['grade'] = author.grade
     form['blog_type'] = author.blog_type
     form['blog_address'] = author.blog_address
     form['flag'] = author.flag

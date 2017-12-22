@@ -8,6 +8,10 @@
         <input id="name" name="name" type="text" value="{{ form['name'] }}" required/>
       </div>
       <div class="form-group">
+        <label>Grade</label>
+        <input id="grade" name="grade" type="text" value="{{ form['grade'] }}" required/>
+      </div>
+      <div class="form-group">
         <label>Blog Type</label>
         <select class="w3-select" id="blog_type" name="blog_type" required>
           <option value="csdn" {% if form['blog_type'] == 'csdn' %} selected {% endif %}>csdn</option>
@@ -22,7 +26,8 @@
       </div>
       <div class="form-group">
         <label for="flag">Flag True</label>
-        <input id="flag" type="checkbox" class="w3-check" name="flag" value="y" {% if form['flag'] == True %} checked {% endif %}/>
+        <input id="flag" type="checkbox" class="w3-check" name="flag" value="y" {% if form['flag'] == True %}
+               checked {% endif %}/>
       </div>
       <div class="form-group">
         <label>Avatar</label>

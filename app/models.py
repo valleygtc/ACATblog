@@ -6,6 +6,7 @@ from flask import current_app
 class Author(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20))
+    grade = db.Column(db.Integer)
     blog_type = db.Column(db.String(20))
     blog_address = db.Column(db.String(80))
     last_get = db.Column(db.DateTime)
