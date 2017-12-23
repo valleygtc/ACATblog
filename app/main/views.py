@@ -107,7 +107,7 @@ def author_modify(author_id):
         author.grade = request.form['grade']
         author.blog_type = request.form['blog_type']
         author.blog_address = request.form['blog_address']
-        if request.form['flag'] == 'y' and not request.form['blog_type'] == 'others':
+        if request.form.get('flag', None) == 'y' and not request.form['blog_type'] == 'others':
             author.flag = True
         else:
             author.flag = False
