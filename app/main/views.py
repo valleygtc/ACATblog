@@ -3,7 +3,6 @@ from . import main
 from ..decorators import login_required
 from ..models import Author, Article, Constant
 from .. import db
-# from .form import LoginForm, AddAuthorForm, ModifyAuthorForm, DeleteAuthorConfirm
 from flask import current_app, flash, redirect, url_for
 from datetime import datetime
 
