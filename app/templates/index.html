@@ -19,13 +19,13 @@
 
 
 <aside class="w3-container w3-border">
-  {% for grade in grade_group %}
+  {% for grade_group in grade_groups %}
     <section class="w3-container w3-border-bottom author-container grade-group">
-      <h2 class="grade-title">{{ grade[0].grade }}级</h2>
-      {% for author in grade %}
+      <h2 class="grade-title">{{ grade_group[0].grade }}级</h2>
+      {% for author in grade_group %}
         <section class="w3-container w3-border-bottom author-container">
           <img src="{{ url_for('main.avatar',author_id=author.id) }}" alt="ACATlogo" class="img-thumbnail"/>
-          <a href="{{ author.blog_address }}">{{ author.name }}</a>
+          <a href="{{ url_for('main.index', author_id=author.id) }}">{{ author.name }}</a>
         </section>
       {% endfor %}
     </section>
@@ -36,7 +36,7 @@
 <main class="w3-container w3-border">
   {% for article in articles %}
     <section class="w3-container w3-padding-24 w3-border-bottom">
-      <h3><a href="{{ article.url }}">{{ article.title }}</a></h3>
+      <h3><a href="{{ article.url }}" target="_blank">{{ article.title }}</a></h3>
       <p>{{ article.content_text[:300] }}</p>
       <br/>
       <div class="article-footer">
@@ -49,11 +49,11 @@
   {% endfor %}
   <div class="pagination-container w3-padding-16">
     <div class="pagination">
-      <a href="{{ url_for('main.index', page=pagination.prev_num) }}">&laquo;</a>
+      <a href="{{ url_for('main.index', author_id=pagination.author_id, page=pagination.prev_num) }}">&laquo;</a>
       {%- for page in pagination.iter_pages(left_edge=2, left_current=2, right_current=5, right_edge=2) %}
         {% if page %}
           {% if page != pagination.page %}
-            <a href="{{ url_for('main.index', page=page) }}">{{ page }}</a>
+            <a href="{{ url_for('main.index', author_id=pagination.author_id, page=page) }}">{{ page }}</a>
           {% else %}
             <a href="#" class="active">{{ page }}</a>
           {% endif %}
@@ -61,7 +61,7 @@
           <a id="a-disabled" href="#">…</a>
         {% endif %}
       {%- endfor %}
-      <a href="{{ url_for('main.index', page=pagination.next_num) }}">&raquo;</a>
+      <a href="{{ url_for('main.index', author_id=pagination.author_id, page=pagination.next_num) }}">&raquo;</a>
     </div>
   </div>
 </main>

@@ -11,23 +11,32 @@ from datetime import datetime
 @main.route('/')
 def index():
     authors = Author.query.order_by(Author.grade.asc())
+
     def select_grade(authors, grade):
         group = []
         for author in authors:
             if author.grade == grade:
                 group.append(author)
         return group
-    # grade_group为[[author,author...],[author,author...]...]的形式
-    grade_group = []
-    grade_group.append(select_grade(authors, 2014))
-    grade_group.append(select_grade(authors, 2015))
-    grade_group.append(select_grade(authors, 2016))
-    grade_group.append(select_grade(authors, 2017))
+
+    # grade_groups为[[author,author...],[author,author...]...]的形式
+    grade_groups = []
+    grade_groups.append(select_grade(authors, 2014))
+    grade_groups.append(select_grade(authors, 2015))
+    grade_groups.append(select_grade(authors, 2016))
+    grade_groups.append(select_grade(authors, 2017))
 
     page = request.args.get('page', 1, type=int)
-    pagination = Article.query.order_by(Article.pub_date.desc()).paginate(page, per_page=10)
+    author_id = request.args.get('author_id', None, int)
+    if author_id:
+        pagination = Article.query.filter_by(author_id=author_id).order_by(Article.pub_date.desc()).paginate(page,
+                                                                                                             per_page=10)
+        pagination.author_id = author_id
+    else:
+        pagination = Article.query.order_by(Article.pub_date.desc()).paginate(page, per_page=10)
+        pagination.author_id = None
     articles = pagination.items
-    return render_template('index.html', grade_group = grade_group, articles=articles, pagination=pagination)
+    return render_template('index.html', grade_groups=grade_groups, articles=articles, pagination=pagination)
 
 
 @main.route('/avatar/<int:author_id>')
@@ -79,7 +88,8 @@ def author_add():
             avatar = a
         else:
             avatar = open('app/static/images/ACAT.jpg', mode='rb').read()
-        author = Author(name=request.form['name'], grade=int(request.form['grade']), blog_type=request.form['blog_type'],
+        author = Author(name=request.form['name'], grade=int(request.form['grade']),
+                        blog_type=request.form['blog_type'],
                         blog_address=request.form['blog_address'],
                         last_get=datetime.now(), avatar=avatar, flag=flag)
         db.session.add(author)
@@ -102,7 +112,7 @@ def author_modify(author_id):
             author.flag = True
         else:
             author.flag = False
-        a =  request.files['avatar'].read()
+        a = request.files['avatar'].read()
         # 只有上传了avatar才会修改，未上传则不修改Author.avatar
         if a:
             author.avatar = a
@@ -132,76 +142,6 @@ def author_delete(author_id):
     return render_template('author_delete.html', author=author)
 
 
-# 使用Flask-Form的版本
-# @main.route('/login', methods=['GET', 'POST'])
-# def login():
-#     session['login'] = False
-#     form = LoginForm()
-#     if form.validate_on_submit():
-#         if form.username.data == current_app.config['ADMIN_USERNAME'] and \
-#                         form.password.data == current_app.config['ADMIN_PASSWORD']:
-#             session['login'] = True
-#             flash('Welcome Admin')
-#         else:
-#             flash('Username or Password wrong!')
-#     return redirect(url_for('main.index'))
-
-# @main.route('/add-author', methods=['GET', 'POST'])
-# @login_required
-# def author_add():
-#     form = AddAuthorForm()
-#     if form.validate_on_submit():
-#         flag = True
-#         if form.blog_type == 'others':
-#             flag = False
-#         author = Author(name=form.name.data, blog_type=form.blog_type.data, blog_address=form.blog_address.data,
-#                         last_get=datetime.now(), avatar=form.avatar.data.read(), flag=flag)
-#         db.session.add(author)
-#         db.session.commit()
-#         flash('Add %s Successfully!' % form.name.data)
-#         return redirect(url_for('main.manage'))
-#     return render_template('author_add.html', form=form)
-
-# @main.route('/modify-author/<int:author_id>', methods=['GET', 'POST'])
-# @login_required
-# def author_modify(author_id):
-#     form = ModifyAuthorForm()
-#     author = Author.query.filter_by(id=author_id).first()
-#     if form.validate_on_submit():
-#         author.name = form.name.data
-#         author.blog_type = form.blog_type.data
-#         author.blog_address = form.blog_address.data
-#         author.flag = form.flag.data
-#         if form.blog_type.data == 'others':
-#             author.flag = False
-#         if form.avatar.data:
-#             author.avatar = form.avatar.data.read()
-#         db.session.add(author)
-#         db.session.commit()
-#         flash('Modify %s Successfully' % form.name.data)
-#         return redirect(url_for('main.manage'))
-#     else:
-#         form.name.data = author.name
-#         form.blog_type.data = author.blog_type
-#         form.blog_address.data = author.blog_address
-#         form.flag.data = author.flag
-#     return render_template('author_modify.html', form=form)
-
-
-# @main.route('/delete-author/<int:author_id>', methods=['GET', 'POST'])
-# @login_required
-# def author_delete(author_id):
-#     author = Author.query.filter_by(id=author_id).first()
-#     form = DeleteAuthorConfirm()
-#     if form.validate_on_submit():
-#         if form.confirm.data:
-#             db.session.delete(author)
-#             db.session.commit()
-#             flash('Delete %s successfully.' % author.name)
-#             return redirect(url_for('main.manage'))
-#     return render_template('author_delete.html', form=form, author=author)
-
-
 # 官网上的近期活动：公众号文章
 @main.route('/redirect-to-sogou')
 def tosogou():
@@ -209,14 +149,3 @@ def tosogou():
     wx_api = WechatSogouAPI()
     profile_url = wx_api.get_gzh_info('xuptcal')['profile_url']
     return redirect(profile_url)
-
-# 线上那个原版需要用的
-# @main.app_template_filter('group')
-# def group(authors, number):
-#     groups = []
-#     for index, author in enumerate(authors, 1):
-#         if index % number == 1:
-#             groups.append([author])
-#         else:
-#             groups[-1].append(author)
-#     return groups
