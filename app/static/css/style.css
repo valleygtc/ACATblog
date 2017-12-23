@@ -45,6 +45,19 @@ a {
   display: inline-block;
 }
 
+.header-left {
+  width: 70%;
+  float: left;
+}
+
+.header-right {
+  width: 15%;
+}
+.header-right a {
+  color: #cc4400;
+}
+
+
 /* aside相关 */
 .author-container {
   padding-top: 5px;
