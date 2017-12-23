@@ -13,15 +13,20 @@
 
 <body>
 <header class="w3-container w3-padding-24 w3-bottombar">
-  <img src="{{ url_for('static', filename="images/ACAT.jpg") }}" alt="ACATlogo" class="img-logo"/>
-  <span class="header-title">XUPT ACAT 群博网站</span>
+  <div>
+    <img src="{{ url_for('static', filename="images/ACAT.jpg") }}" alt="ACATlogo" class="img-logo"/>
+    <h1 class="header-title">XUPT ACAT 群博网站</h1>
+  </div>
 </header>
 
 
 <aside class="w3-container w3-border">
+  <section class="w3-container w3-border-bottom author-container">
+    <h2>协会成员</h2>
+  </section>
   {% for grade_group in grade_groups %}
     <section class="w3-container w3-border-bottom author-container grade-group">
-      <h2 class="grade-title">{{ grade_group[0].grade }}级</h2>
+      <h2 class="grade-title w3-hover-shadow">{{ grade_group[0].grade }}级</h2>
       {% for author in grade_group %}
         <section class="w3-container w3-border-bottom author-container">
           <img src="{{ url_for('main.avatar',author_id=author.id) }}" alt="ACATlogo" class="img-thumbnail"/>

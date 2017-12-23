@@ -42,7 +42,7 @@ a {
 
 
 .header-title {
-  font-size: 1.9em;
+  display: inline-block;
 }
 
 /* aside相关 */
