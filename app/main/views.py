@@ -147,5 +147,5 @@ def author_delete(author_id):
 def tosogou():
     from wechatsogou import WechatSogouAPI
     wx_api = WechatSogouAPI()
-    profile_url = wx_api.get_gzh_info('xuptcal')['profile_url']
+    profile_url = wx_api.get_gzh_info('xuptacat')['profile_url']
     return redirect(profile_url)
