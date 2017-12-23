@@ -41,19 +41,21 @@ a {
 }
 
 
-.header-title {
+#header-title {
   display: inline-block;
 }
 
-.header-left {
-  width: 70%;
+#header-left {
+  width: 40%;
   float: left;
 }
 
-.header-right {
-  width: 15%;
+#header-right {
+  height: 160px;
+  float: left;
+  width: 60%;
 }
-.header-right a {
+#header-right a {
   color: #cc4400;
 }
 
