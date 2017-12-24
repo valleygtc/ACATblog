@@ -54,6 +54,7 @@ class Aliyun(ProductConfig):
         file_handler = RotatingFileHandler('/var/www/ACATblog/crawler-verbose.log',
                                            mode='a', maxBytes=2000)
         file_handler.setLevel(logging.INFO)
+        app.logger.setLevel(logging.INFO)
         app.logger.addHandler(file_handler)
 
 
