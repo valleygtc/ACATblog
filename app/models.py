@@ -1,6 +1,7 @@
 from datetime import datetime
 from . import db
 from flask import current_app
+import time
 
 
 class Author(db.Model):
@@ -53,6 +54,7 @@ class Article(db.Model):
         for author in authors:
             from .crawler import get_articles
             get_articles(author, author.last_get)
+            time.sleep(10)
         current_app.logger.info('Crawler done!')
 
     def __repr__(self):
