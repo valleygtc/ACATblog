@@ -5,6 +5,7 @@ from flask_migrate import Migrate
 from app import create_app
 from app import db
 from app.models import Author, Article, Constant
+import time
 
 app = create_app(os.getenv('FLASK_CONFIG') or 'default')
 migrate = Migrate(app, db)
@@ -29,10 +30,10 @@ def init_db():
 
 @app.cli.command()
 def crawl():
-    current_app.logger.info('Crawler begin.')
+    current_app.logger.info(time.ctime() + ':Crawler begin.')
     Article.update()
-    current_app.logger.info('Crawler done.')
-    current_app.logger.info('Update table Constant begin.')
+    current_app.logger.info(time.ctime() + ':Crawler done.')
+    current_app.logger.info(time.ctime() + ':Update table Constant begin.')
     Constant.update()
-    current_app.logger.info('Update table Constant done.')
+    current_app.logger.info(time.ctime() + ':Update table Constant done.')
 

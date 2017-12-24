@@ -31,6 +31,7 @@ class ProductConfig(BaseConfig):
         BaseConfig.init_app(app)
         pass
 
+
 class HerokuConfig(ProductConfig):
     @staticmethod
     def init_app(app):
@@ -42,17 +43,25 @@ class HerokuConfig(ProductConfig):
         file_handler.setLevel(logging.WARNING)
         app.logger.addHandler(file_handler)
 
+
 class Aliyun(ProductConfig):
     @staticmethod
     def init_app(app):
         ProductConfig.init_app(app)
+        # log to /var/www/ACATblog/crawler-verbose.log
+        import logging
+        from logging.handlers import RotatingFileHandler
+        file_handler = RotatingFileHandler('/var/www/ACATblog/crawler-verbose.log',
+                                           mode='a', maxBytes=2000)
+        file_handler.setLevel(logging.INFO)
+        app.logger.addHandler(file_handler)
 
 
 config = {
     'develope': DevConfig,
     'production': ProductConfig,
-    'heroku':HerokuConfig,
-    'aliyun':Aliyun,
+    'heroku': HerokuConfig,
+    'aliyun': Aliyun,
 
     'default': DevConfig,
 }
