@@ -50,7 +50,7 @@
   {% for article in articles %}
     <section class="w3-container w3-padding-24 w3-border-bottom">
       <h3><a href="{{ article.url }}" target="_blank">{{ article.title }}</a></h3>
-      <p>{{ article.content_text[:300] }}</p>
+      <p class="fix-overflow">{{ article.content_text[:300] }}</p>
       <br/>
       <div class="article-footer">
         <span class="article-author">
