@@ -54,7 +54,8 @@ class Article(db.Model):
         for author in authors:
             from .crawler import get_articles
             get_articles(author, author.last_get)
-            time.sleep(10)
+            if current_app.config.get('DEBUG') != True:
+                time.sleep(10)
         current_app.logger.info('Crawler done!')
 
     def __repr__(self):

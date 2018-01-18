@@ -45,7 +45,7 @@ def get_articles_csdn(author, from_date):
     rss = BeautifulSoup(blog.text, "html.parser")
     for item in rss.find_all('item'):
         # 注：beautiful会格式化传递给它的html，将所有的tag name变成小写的，所以pubdate要用小写的。
-        pub_date = datetime.strptime(item.pubdate.string, '%Y/%m/%d %H:%M:%S')
+        pub_date = datetime.strptime(item.pubdate.string, '%Y-%m-%dT%H:%M:%S')
         if pub_date > from_date:
             # 注：正常来说应该是item.description.string就行，但是不对，有点毛病，所以只好根据实际情况调整成下面那样
             content_html = item.description.contents[0].string
