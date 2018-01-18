@@ -21,8 +21,9 @@ def get_articles(author, from_date):
             get_articles_cnblogs(author, from_date)
         if author.blog_type == 'sina':
             get_articles_sina(author, from_date)
-    except:
+    except Exception as e:
         current_app.logger.warning('crawler:' + author.name + 'get_articles wrong!')
+        current_app.logger.warning('verbose:' + str(e))
     else:
         current_app.logger.info('crawler:' + author.name + 'get_articles successfully!')
 
@@ -51,7 +52,7 @@ def get_articles_csdn(author, from_date):
             content_html = item.description.contents[0].string
             # 优化：用re来实现提取阅读量
             content_soup = BeautifulSoup(content_html, "html.parser")
-            read_times = int(content_soup.find_all('div')[-1].contents[0].split()[0].split('：')[1])
+            read_times = int(content_soup.find_all('div')[-1].contents[0].strip().split('：')[1][:-2])
             article = Article(title=item.title.string,
                               url=item.link.string, pub_date=pub_date, author=author, content_html=content_html,
                               content_text=''.join(content_soup.get_text().split()), read_times=read_times)
