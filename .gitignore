@@ -8,3 +8,4 @@ __pycache__/
 aliyun_env.sh
 crawl_daily.log
 crawler-verbose.log
+.vscode/
