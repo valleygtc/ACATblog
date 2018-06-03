@@ -1,0 +1,35 @@
+需要的文件：
+aliyun_env.sh：web app环境变量，声明管理页面admin的账号和密码
+db.sqlite：数据库
+
+
+部署步骤：
+(1) 文件准备
+cd /var/www
+git clone https://github.com/valleygtc/ACATblog
+然后再将aliyun_env.sh， db.sqlite两个文件放到ACATblog文件夹中。
+注意点：db.sqlite是数据库文件， 一定要有 w 权限，否则写不进东西去。（chmod 666 db.sqlite）
+
+(2) 安装所需程序：sudo install apache2,apache2-dev
+
+(3) 创建并进入python虚拟环境：
+cd /var/www/ACATblog
+python3 -m venv venv
+source venv/bin/activate
+
+(4) 安装依赖包：
+pip3 install -r requirements.txt
+
+（试一下，在命令行中输入：
+export FLASK_APP=manage.py
+flask run
+应该能跑才对。）
+
+(5) 启动服务器：
+sudo source aliyun_serverstart.sh
+
+(6) 设置crontab进行爬虫定时爬取：
+使用root用户：su
+crontab -e
+进入文件后，在文件末尾加上一行：
+0 0 * * * /bin/bash /var/www/ACATblog/crawl_daily.sh >>/var/www/ACATblog/crawl_daily.log

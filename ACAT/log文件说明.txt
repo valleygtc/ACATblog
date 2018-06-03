@@ -1,0 +1,6 @@
+爬虫log：
+crawl_daily.log： 记录每天爬取情况，是否成功
+crawler-verbose.log：记录的比较详细，每个author的爬去情况。
+
+apache httpd server log：
+/etc/mod_wsgi-express-80/error_log
