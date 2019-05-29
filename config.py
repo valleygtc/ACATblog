@@ -1,5 +1,6 @@
 import os
 
+
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 
@@ -14,40 +15,21 @@ class BaseConfig():
 
 class DevConfig(BaseConfig):
     DEBUG = True
-    ADMIN_USERNAME = 'admin'
-    ADMIN_PASSWORD = 'admin'
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URI') or \
-                              'sqlite:///' + os.path.join(basedir, 'db.sqlite')
-
-
-class ProductConfig(BaseConfig):
-    ADMIN_USERNAME = os.environ.get('ADMIN_USERNAME') or 'admin'
-    ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD') or 'admin'
+    ADMIN_USERNAME = os.environ.get('ADMIN_USERNAME', 'admin')
+    ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD', 'admin')
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URI') or \
                               'sqlite:///' + os.path.join(basedir, 'db.sqlite')
+
+
+class ProductionConfig(BaseConfig):
+    SECRET_KEY = os.environ['SECRET_KEY']
+    ADMIN_USERNAME = os.environ['ADMIN_USERNAME']
+    ADMIN_PASSWORD = os.environ['ADMIN_PASSWORD']
+    SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URI']
 
     @staticmethod
     def init_app(app):
         BaseConfig.init_app(app)
-        pass
-
-
-class HerokuConfig(ProductConfig):
-    @staticmethod
-    def init_app(app):
-        ProductConfig.init_app(app)
-        # log to stderr
-        import logging
-        from logging import StreamHandler
-        file_handler = StreamHandler()
-        file_handler.setLevel(logging.WARNING)
-        app.logger.addHandler(file_handler)
-
-
-class Aliyun(ProductConfig):
-    @staticmethod
-    def init_app(app):
-        ProductConfig.init_app(app)
         # log to /var/www/ACATblog/crawler-verbose.log
         import logging
         from logging.handlers import RotatingFileHandler
@@ -59,10 +41,6 @@ class Aliyun(ProductConfig):
 
 
 config = {
-    'develope': DevConfig,
-    'production': ProductConfig,
-    'heroku': HerokuConfig,
-    'aliyun': Aliyun,
-
-    'default': DevConfig,
+    'development': DevConfig,
+    'production': ProductionConfig,
 }

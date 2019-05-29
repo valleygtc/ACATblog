@@ -142,9 +142,9 @@ def author_delete(author_id):
 
 
 # 官网上的近期活动：公众号文章
-@main.route('/redirect-to-sogou')
-def tosogou():
-    from wechatsogou import WechatSogouAPI
-    wx_api = WechatSogouAPI()
-    profile_url = wx_api.get_gzh_info('xuptacat')['profile_url']
-    return redirect(profile_url)
+# @main.route('/redirect-to-sogou')
+# def tosogou():
+#     from wechatsogou import WechatSogouAPI
+#     wx_api = WechatSogouAPI()
+#     profile_url = wx_api.get_gzh_info('xuptacat')['profile_url']
+#     return redirect(profile_url)

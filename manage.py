@@ -1,21 +1,19 @@
 #!usr/bin/python3.5
 import os
 from flask import current_app
-from flask_migrate import Migrate
 from app import create_app
 from app import db
 from app.models import Author, Article, Constant
 import time
 
-app = create_app(os.getenv('FLASK_CONFIG') or 'default')
-migrate = Migrate(app, db)
+
+app = create_app(os.getenv('FLASK_ENV') or 'production')
 
 
 def make_shell_context():
     return dict(db=db, Author=Author, Article=Article, Constant=Constant)
 
 app.shell_context_processor(make_shell_context)
-
 
 
 @app.cli.command()
